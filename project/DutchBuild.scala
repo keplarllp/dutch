@@ -24,7 +24,7 @@ object DutchBuild extends Build {
   }
 
   // Define our project, with basic project information and library dependencies
-  lazy val dutchProject = Project("amazon-marketplace-competitor-pricing", file("."))
+  lazy val dutchProject = Project("dutch", file("."))
     .settings(dutchSettings: _*)
     .settings(
       libraryDependencies ++= Seq(

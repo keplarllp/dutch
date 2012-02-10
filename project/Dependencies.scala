@@ -16,6 +16,6 @@ object Dependencies {
     val config      = "com.typesafe.config"              % "config"  % V.config
 
     // User for Argot
-    val argot       = "org.clapper"                      % "argot"   % V.argot
+    val argot       = "org.clapper"                      % "argot_2.9.0"   % V.argot
   }
 }
