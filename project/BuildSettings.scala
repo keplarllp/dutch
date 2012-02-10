@@ -17,12 +17,25 @@ object BuildSettings {
 
   // Basic settings for our app
   lazy val basicSettings = Seq[Setting[_]](
-    organization  := "co.orderly",
+    organization  := "Orderly Ltd",
     version       := "0.1",
     description   := "A command-line tool for monitoring competitors' prices on Amazon Marketplace",
     scalaVersion  := "2.9.1",
     scalacOptions := Seq("-deprecation", "-encoding", "utf8")
   )
+
+  // Makes our SBT app settings available from within the app
+  lazy val scalifySettings = Seq(sourceGenerators in Compile <+= (sourceManaged in Compile, version, name, organization) map { (d, v, n, o) =>
+    val file = d / "settings.scala"
+    IO.write(file, """package co.orderly.dutch.generated
+      |object Settings {
+      |  val organization = "%s"
+      |  val version = "%s"
+      |  val name = "%s"
+      |}
+      |""".stripMargin.format(o, v, n))
+    Seq(file)
+  })
 
   // Proguard settings for packaging
   import ProguardPlugin._
@@ -35,5 +48,5 @@ object BuildSettings {
     )
   )
 
-  lazy val dutchSettings = basicSettings ++ proguard
+  lazy val dutchSettings = basicSettings ++ scalifySettings ++ proguard
 }
