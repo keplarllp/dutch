@@ -8,7 +8,7 @@ Dutch is a command-line app which uses the [Amazon MWS Products API](https://dev
 
 Dutch contains the Marketplace Web Service Products Java Library, copyright
 2008 [Amazon Technologies, Inc](http://www.amazon.com/). You can find this
-in the `/lib` sub-directory.
+library in the `/lib` sub-directory.
 
 The remainder of Dutch is copyright 2012 Orderly Ltd. 
 
