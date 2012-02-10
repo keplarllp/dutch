@@ -10,13 +10,10 @@ Dutch contains the Marketplace Web Service Products Java Library, copyright
 2008 [Amazon Technologies, Inc](http://www.amazon.com/). You can find this
 in the `/lib` sub-directory.
 
-The remainder of Dutch is Copyright 2012 Orderly Ltd. 
+The remainder of Dutch is copyright 2012 Orderly Ltd. 
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0) (the "License");
 you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
