@@ -80,7 +80,10 @@ object DutchApplication {
 
     try {
       parser.parse(args)
-      Pricer.run(config.value.get, input, output.value.get)
+
+      // TODO: turn input into what we want
+
+      Pricer.run(config.value.get, input.value, output.value.get)
     } catch {
       case e: ArgotUsageException => println(e.message)
     }

@@ -29,7 +29,8 @@ object Pricer {
   /**
    * Executes a pricing run
    */
-  def run(config: Config, input: MultiValueParameter[File], output: String) {
+  def run(config: Config, input: Seq[File], output: String) {
     Console.println("Running pricing!")
+    for( ln <- io.Source.stdin.getLines ) println( ln )
   }
 }
