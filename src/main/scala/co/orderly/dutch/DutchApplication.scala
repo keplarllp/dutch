@@ -28,12 +28,18 @@ object DutchApplication {
 
   // General bumf for Dutch
   val parser = new ArgotParser(
-    generated.Settings.name,
+    programName = generated.Settings.name,
+    compactUsage = true,
     preUsage = Some("%s: Version %s. Copyright (c) 2012, %s.".format(
       generated.Settings.name,
       generated.Settings.version,
       generated.Settings.organization))
   )
+
+    // Obligatory output file
+  val output = parser.parameter[String]("outputfile",
+                                        "Output CSV file to write",
+                                        false)
 
   // Optional config argument
   val config = parser.option[Config](List("c", "config"),
@@ -50,10 +56,15 @@ object DutchApplication {
       }
   }
 
-  // Obligatory output file
-  val output = parser.parameter[String]("outputfile",
-                                        "Output CSV file to write",
-                                        false)
+  // Optional no-header flag
+  val noHeader = parser.flag[Boolean](List("n", "noheader"),
+                                     "Flag that input CSV file(s) do not have a header row")
+
+  // Optional custom CSV separator
+  // TODO
+
+  // Optional CSV character escaper
+  // TODO
 
   // Optional input file(s)
   val input = parser.multiParameter[File]("input",
@@ -74,7 +85,8 @@ object DutchApplication {
     try {
       // Grab the command line arguments, set defaults
       parser.parse(args)
-      val c = config.value.getOrElse(ConfigFactory.load("merchant"))
+      val c = config.value.getOrElse(ConfigFactory.load("merchant")) // Fall back to the /resources/merchant.conf
+      val h = if (noHeader.value.getOrElse(false)) 0 else 1 // Number of rows to skip
 
       // Run the pricing module
       Pricer.run(c, input.value, output.value.get)
