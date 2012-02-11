@@ -6,6 +6,31 @@
 
 Dutch is a command-line app which uses the [Amazon MWS Products API] [apidoc] to check your competitors' prices on Amazon Marketplace. Dutch is written in Scala.
 
+## Usage
+
+    Usage of Dutch is as per the command-line help:
+
+    dutch: Version 0.1. Copyright (c) 2012, Orderly Ltd.
+
+    Usage: dutch [OPTIONS] outputfile [input] ...
+
+    OPTIONS
+    -c filename
+    --config filename  Configuration file. Defaults to "resources/example.conf"
+		       (within .jar) if not set
+    -n
+    --noheader         Flags that input CSV file(s) does not have a header row
+    -q sep
+    --quote sep        Quote character to use for CSVs (defaults to ")
+    -s sep
+    --separator sep    Separator character to use for CSVs (defaults to ,). Use \t
+		       for tab
+
+    PARAMETERS
+    outputfile  Output CSV file to write
+    input       Input CSV file(s) to read. If not specified, uses stdin (May be
+		specified multiple times.)
+
 ## Copyright and License
 
 Dutch uses the Marketplace Web Service Products Java Library, copyright
