@@ -61,11 +61,11 @@ object DutchApplication {
                                      "Flags that input CSV file(s) does not have a header row")
 
   // Optional custom CSV separator
-  val separator = parser.option[Int](List("s", "separator"), "sep",
-                                      "Separator character to use for CSVs (defaults to ,)")
+  val separator = parser.option[Char](List("s", "separator"), "sep",
+                                      "Separator character to use for CSVs (defaults to ,). Use \\t for tab")
 
   // Optional CSV character escaper
-  val quote = parser.option[Int](List("q", "quote"), "sep",
+  val quoteChar = parser.option[Char](List("q", "quote"), "sep",
                                       "Quote character to use for CSVs (defaults to \")")
 
   // Optional input file(s)
@@ -85,14 +85,21 @@ object DutchApplication {
   def main(args: Array[String]) {
 
     try {
+      // TODO: store start time
+
       // Grab the command line arguments, set defaults
       parser.parse(args)
-      val c = config.value.getOrElse(ConfigFactory.load("merchant")) // Fall back to the /resources/merchant.conf
-      val h = if (noHeader.value.getOrElse(false)) 0 else 1 // Number of rows to skip
-
 
       // Run the pricing module
-      Pricer.run(c, input.value, output.value.get)
+      Pricer(config = config.value.getOrElse(ConfigFactory.load("merchant")), // Fall back to the /resources/merchant.conf
+            line = if (noHeader.value.getOrElse(false)) 0 else 1, // Number of rows to skip
+            separator = separator.value.getOrElse(','),
+            quoteChar = quoteChar.value.getOrElse('\"'),
+            input = input.value,
+            output = output.value.get
+      ).run()
+
+      // TODO: print end time
     } catch {
       case e: ArgotUsageException => println(e.message)
     }

@@ -22,14 +22,19 @@ import org.clapper.argot._
 import com.typesafe.config.Config
 
 /**
- * Pricer is the pricing module for Dutch
+ * Pricer performs the competitive pricing
  */
-object Pricer {
+case class Pricer(config: Config,
+                  line: Int,
+                  separator: Char,
+                  quoteChar: Char,
+                  input: Seq[File],
+                  output: String) {
 
   /**
    * Executes a pricing run
    */
-  def run(config: Config, input: Seq[File], output: String) { // TODO: change Seq[File] to Iterator[String]
+  def run() { // TODO: change Seq[File] to Iterator[String]
     Console.println("Running pricing!")
     for( ln <- io.Source.stdin.getLines ) println( ln )
   }
