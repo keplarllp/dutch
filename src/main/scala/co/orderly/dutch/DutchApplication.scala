@@ -42,7 +42,7 @@ object DutchApplication {
     (c, opt) =>
 
       opt.value match {
-        case None => ConfigFactory.load("example")
+        case None => ConfigFactory.load("merchant")
 
         case Some(_) => {
 
