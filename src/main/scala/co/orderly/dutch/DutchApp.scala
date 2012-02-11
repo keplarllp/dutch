@@ -14,6 +14,7 @@ package co.orderly.dutch
 
 // Java
 import java.io.File
+import java.util.concurrent.TimeUnit.NANOSECONDS
 
 // Argot
 import org.clapper.argot._
@@ -85,7 +86,8 @@ object DutchApp {
   def main(args: Array[String]) {
 
     try {
-      // TODO: store start time
+      // Store start time
+      val start = System.nanoTime()
 
       // Grab the command line arguments, set defaults
       parser.parse(args)
@@ -99,7 +101,8 @@ object DutchApp {
             output = output.value.get
       ).run()
 
-      // TODO: print end time
+      // Print how long this took
+      Console.println("Completed in %s milliseconds".format(NANOSECONDS.toMillis(System.nanoTime() - start)))
     } catch {
       case e: ArgotUsageException => println(e.message)
     }

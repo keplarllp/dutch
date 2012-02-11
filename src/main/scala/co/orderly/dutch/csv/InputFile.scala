@@ -12,3 +12,22 @@
  */
 package co.orderly.dutch
 package csv
+
+// Scala
+import scala.reflect.BeanProperty
+
+// opencsv
+import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy
+
+/**
+ * InputFile is the file structure which we expect any input CSV (including
+ * from stdin) to take. This is defined as a Java bean so that it plays
+ * nicely with opencsv:
+ *
+ *   http://opencsv.sourceforge.net/#javabean-integration
+ */
+class InputFile {
+
+  @BeanProperty
+  var blah: String = _
+}

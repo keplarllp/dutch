@@ -12,3 +12,22 @@
  */
 package co.orderly.dutch
 package csv
+
+// Scala
+import scala.reflect.BeanProperty
+
+// opencsv
+import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy
+
+/**
+ * OutputFile is the file structure which we will populate for the output
+ * CSV file. This is defined as a Java bean so that it plays nicely with
+ * opencsv:
+ *
+ *   http://opencsv.sourceforge.net/#javabean-integration
+ */
+class OutputFile {
+
+  @BeanProperty
+  var blah: String = _
+}

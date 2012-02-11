@@ -15,9 +15,6 @@ package co.orderly.dutch
 // Java
 import java.io.File
 
-// Argot
-import org.clapper.argot._
-
 // Config
 import com.typesafe.config.Config
 
@@ -36,6 +33,6 @@ case class Pricer(config: Config,
    */
   def run() { // TODO: change Seq[File] to Iterator[String]
     Console.println("Running pricing!")
-    for( ln <- io.Source.stdin.getLines ) println( ln )
+    // for( ln <- io.Source.stdin.getLines ) println( ln )
   }
 }
