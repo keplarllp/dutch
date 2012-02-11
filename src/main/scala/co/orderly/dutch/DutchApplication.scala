@@ -58,13 +58,15 @@ object DutchApplication {
 
   // Optional no-header flag
   val noHeader = parser.flag[Boolean](List("n", "noheader"),
-                                     "Flag that input CSV file(s) do not have a header row")
+                                     "Flags that input CSV file(s) does not have a header row")
 
   // Optional custom CSV separator
-  // TODO
+  val separator = parser.option[Int](List("s", "separator"), "sep",
+                                      "Separator character to use for CSVs (defaults to ,)")
 
   // Optional CSV character escaper
-  // TODO
+  val quote = parser.option[Int](List("q", "quote"), "sep",
+                                      "Quote character to use for CSVs (defaults to \")")
 
   // Optional input file(s)
   val input = parser.multiParameter[File]("input",
@@ -87,6 +89,7 @@ object DutchApplication {
       parser.parse(args)
       val c = config.value.getOrElse(ConfigFactory.load("merchant")) // Fall back to the /resources/merchant.conf
       val h = if (noHeader.value.getOrElse(false)) 0 else 1 // Number of rows to skip
+
 
       // Run the pricing module
       Pricer.run(c, input.value, output.value.get)
