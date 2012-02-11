@@ -8,7 +8,7 @@ Dutch is a command-line app which uses the [Amazon MWS Products API] [apidoc] to
 
 ## Usage
 
-    Usage of Dutch is as per the command-line help:
+Usage of Dutch is as per the command-line help:
 
     dutch: Version 0.1. Copyright (c) 2012, Orderly Ltd.
 
