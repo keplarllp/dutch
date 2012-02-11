@@ -29,7 +29,7 @@ object Pricer {
   /**
    * Executes a pricing run
    */
-  def run(config: Config, input: Seq[File], output: String) {
+  def run(config: Config, input: Seq[File], output: String) { // TODO: change Seq[File] to Iterator[String]
     Console.println("Running pricing!")
     for( ln <- io.Source.stdin.getLines ) println( ln )
   }
