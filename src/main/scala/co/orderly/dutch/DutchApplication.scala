@@ -41,19 +41,12 @@ object DutchApplication {
                                      "Configuration file. Defaults to \"resources/example.conf\" (within .jar) if not set") {
     (c, opt) =>
 
-      opt.value match {
-        case None => ConfigFactory.load("merchant")
-
-        case Some(_) => {
-
-          val file = new File(c)
-          if (file.exists) {
-            ConfigFactory.parseFile(file)
-          } else {
-            parser.usage("Configuration file \"%s\" does not exist".format(c))
-            ConfigFactory.empty()
-          }
-        }
+      val file = new File(c)
+      if (file.exists) {
+        ConfigFactory.parseFile(file)
+      } else {
+        parser.usage("Configuration file \"%s\" does not exist".format(c))
+        ConfigFactory.empty()
       }
   }
 
@@ -79,11 +72,12 @@ object DutchApplication {
   def main(args: Array[String]) {
 
     try {
+      // Grab the command line arguments, set defaults
       parser.parse(args)
+      val c = config.value.getOrElse(ConfigFactory.load("merchant"))
 
-      // TODO: turn input into what we want
-
-      Pricer.run(config.value.get, input.value, output.value.get)
+      // Run the pricing module
+      Pricer.run(c, input.value, output.value.get)
     } catch {
       case e: ArgotUsageException => println(e.message)
     }
