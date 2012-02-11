@@ -2,7 +2,7 @@
 
 ## Overview
 
-Dutch is a command-line app which uses the [Amazon MWS Products API][apidoc] to check your competitors' prices on Amazon Marketplace. Dutch is written in Scala.
+Dutch is a command-line app which uses the [Amazon MWS Products API] [apidoc] to check your competitors' prices on Amazon Marketplace. Dutch is written in Scala.
 
 ## Copyright and License
 
