@@ -10,28 +10,26 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
-import sbt._
+package co.orderly.dutch
 
-object Dependencies {
-  val resolutionRepos = Seq(
-    ScalaToolsSnapshots,
-    "Typesafe Repo" at "http://repo.typesafe.com/typesafe/releases/"
-  )
+// Java
+import java.io.File
 
-  object V {
-    val config    = "0.2.1"
-    val argot     = "0.3.5"
-    val opencsv   = "2.0"
-  }
+// Argot
+import org.clapper.argot._
 
-  object Libraries {
-    // Used for Typesafe Config
-    val config      = "com.typesafe.config"              % "config"        % V.config
+// Config
+import com.typesafe.config.Config
 
-    // User for Argot
-    val argot       = "org.clapper"                      % "argot_2.9.0"   % V.argot
+/**
+ * Pricer is the pricing module for Dutch
+ */
+object Pricer {
 
-    // Used for reading/writing CSV files
-    val opencsv     = "net.sf.opencsv"                   % "opencsv"       % V.opencsv
+  /**
+   * Executes a pricing run
+   */
+  def run(config: Config, input: MultiValueParameter[File], output: String) {
+    Console.println("Running pricing!")
   }
 }

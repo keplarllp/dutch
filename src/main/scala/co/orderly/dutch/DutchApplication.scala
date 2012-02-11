@@ -15,9 +15,6 @@ package co.orderly.dutch
 // Java
 import java.io.File
 
-// Scala
-import scala.math
-
 // Argot
 import org.clapper.argot._
 
@@ -29,6 +26,7 @@ object DutchApplication {
   // Argument specifications
   import ArgotConverters._
 
+  // General bumf for Dutch
   val parser = new ArgotParser(
     generated.Settings.name,
     preUsage = Some("%s: Version %s. Copyright (c) 2012, %s.".format(
@@ -37,6 +35,7 @@ object DutchApplication {
       generated.Settings.organization))
   )
 
+  // Optional config argument
   val config = parser.option[Config](List("c", "config"),
                                      "filename",
                                      "Configuration file. Defaults to \"resources/example.conf\" (within .jar) if not set") {
@@ -58,33 +57,30 @@ object DutchApplication {
       }
   }
 
+  // Obligatory output file
   val output = parser.parameter[String]("outputfile",
                                         "Output CSV file to write",
                                         false)
 
+  // Optional input file(s)
   val input = parser.multiParameter[File]("input",
                                           "Input CSV file(s) to read. If not specified, uses stdin",
                                           true) {
     (i, opt) =>
 
-    val file = new File(i)
-    if (!file.exists)
-      parser.usage("Input file \"%s\" does not exist".format(i))
+      val file = new File(i)
+      if (!file.exists)
+        parser.usage("Input file \"%s\" does not exist".format(i))
 
-    file
+      file
   }
 
-  // The guts of the program (omitted here)
-  def runCoolTool = {
-    Console.println("Running cool tool!")
-  }
-
-  // Main program
+  // Main Dutch program
   def main(args: Array[String]) {
 
     try {
       parser.parse(args)
-      runCoolTool
+      Pricer.run(config.value.get, input, output.value.get)
     } catch {
       case e: ArgotUsageException => println(e.message)
     }
