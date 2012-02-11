@@ -39,58 +39,37 @@ object DutchApplication {
 
   val config = parser.option[Config](List("c", "config"),
                                      "filename",
-                                     "Configuration file. Defaults to resources/example.conf if not set") {
+                                     "Configuration file. Defaults to \"resources/example.conf\" (within .jar) if not set") {
     (c, opt) =>
 
       opt.value match {
         case None => ConfigFactory.load("example")
 
-        case Some(f) => {
+        case Some(_) => {
 
-          val file = new File(f)
+          val file = new File(c)
           if (file.exists) {
             ConfigFactory.parseFile(file)
           } else {
-            parser.usage("Configuration file %s does not exist".format(f))
+            parser.usage("Configuration file \"%s\" does not exist".format(c))
             ConfigFactory.empty()
           }
         }
       }
   }
 
-  val noError = parser.flag[Boolean](List("n", "noerror"),
-                                     "Do not abort on error.")
-  val users = parser.multiOption[String](List("u", "user"), "username",
-                                         "User to receive email. Email " +
-                                         "address is queried from " +
-                                         "database.")
-
-  val email = parser.multiOption[String](List("e", "email"), "emailaddr",
-                                         "Address to receive emailed " +
-                                         "results.") {
-    (s, opt) =>
-
-    val ValidAddress = """^[^@]+@[^@]+\.[a-zA-Z]+$""".r
-    ValidAddress.findFirstIn(s) match {
-      case None    => parser.usage("Bad email address \"" + s +
-                                   "\" for " + opt.name + " option.")
-      case Some(_) => s
-    }
-  }
-
   val output = parser.parameter[String]("outputfile",
-                                        "Output CSV file to which to write.",
+                                        "Output CSV file to write",
                                         false)
 
   val input = parser.multiParameter[File]("input",
-                                          "Input CSV files to read. If not " +
-                                          "specified, use stdin.",
+                                          "Input CSV file(s) to read. If not specified, uses stdin",
                                           true) {
-    (s, opt) =>
+    (i, opt) =>
 
-    val file = new File(s)
-    if (! file.exists)
-      parser.usage("Input file \"" + s + "\" does not exist.")
+    val file = new File(i)
+    if (!file.exists)
+      parser.usage("Input file \"%s\" does not exist".format(i))
 
     file
   }
@@ -102,12 +81,11 @@ object DutchApplication {
 
   // Main program
   def main(args: Array[String]) {
+
     try {
       parser.parse(args)
       runCoolTool
-    }
-
-    catch {
+    } catch {
       case e: ArgotUsageException => println(e.message)
     }
   }

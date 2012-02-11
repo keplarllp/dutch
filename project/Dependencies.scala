@@ -9,6 +9,7 @@ object Dependencies {
   object V {
     val config    = "0.2.1"
     val argot     = "0.3.5"
+    val opencsv   = "2.0"
   }
 
   object Libraries {
@@ -17,5 +18,8 @@ object Dependencies {
 
     // User for Argot
     val argot       = "org.clapper"                      % "argot_2.9.0"   % V.argot
+
+    // Used for reading/writing CSV files
+    val opencsv     = "net.sf.opencsv"                   % "opencsv"       % V.opencsv
   }
 }

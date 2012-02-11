@@ -29,7 +29,8 @@ object DutchBuild extends Build {
     .settings(
       libraryDependencies ++= Seq(
         Libraries.argot,
-        Libraries.config
+        Libraries.config,
+        Libraries.opencsv
       )
     )
 }
