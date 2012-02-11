@@ -21,7 +21,7 @@ import org.clapper.argot._
 // Config
 import com.typesafe.config.{Config, ConfigFactory}
 
-object DutchApplication {
+object DutchApp {
 
   // Argument specifications
   import ArgotConverters._
