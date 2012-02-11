@@ -1,5 +1,7 @@
 # Dutch
 
+![dutch] [dutch]
+
 ## Overview
 
 Dutch is a command-line app which uses the [Amazon MWS Products API] [apidoc] to check your competitors' prices on Amazon Marketplace. Dutch is written in Scala.
@@ -21,6 +23,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
+[dutch]: https://github.com/datascience/dutch/raw/master/doc/schultz.jpg
 [apidoc]: https://developer.amazonservices.com/gp/mws/api.html/192-0013333-8270332?ie=UTF8&section=products&group=products&version=latest
 [amazon]: http://www.amazon.com/
 [license]: http://www.apache.org/licenses/LICENSE-2.0
