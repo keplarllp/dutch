@@ -70,7 +70,7 @@ object DutchApp {
                                       "Separator character to use for CSVs (defaults to ,). Use \\t for tab")
 
   // Optional CSV character escaper
-  val quoteChar = parser.option[Char](List("q", "quote"), "sep",
+  val quoteChar = parser.option[Char](List("q", "quote"), "char",
                                       "Quote character to use for CSVs (defaults to \")")
 
   // Optional input file(s)
