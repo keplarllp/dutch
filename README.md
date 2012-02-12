@@ -20,8 +20,8 @@ Usage of Dutch is as per the command-line help:
                        (within .jar) if not set
     -n
     --noheader         Flags that input CSV file(s) does not have a header row
-    -q sep
-    --quote sep        Quote character to use for CSVs (defaults to ")
+    -q char
+    --quote char       Quote character to use for CSVs (defaults to ")
     -s sep
     --separator sep    Separator character to use for CSVs (defaults to ,). Use \t
                        for tab
