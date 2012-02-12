@@ -20,6 +20,20 @@ import scala.reflect.BeanProperty
 import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy
 
 /**
+ * Companion object for InputFile, containing the ColumnPositionMappingStrategy
+ * generator which uses InputFile
+ */
+object InputFile {
+  ColumnPositionMappingStrategy strat = new ColumnPositionMappingStrategy();
+strat.setType(YourOrderBean.class);
+String[] columns = new String[] {"name", "orderNumber", "id"}; // the fields to bind do in your JavaBean
+strat.setColumnMapping(columns);
+
+CsvToBean csv = new CsvToBean();
+List list = csv.parse(strat, yourReader);
+}
+
+/**
  * InputFile is the file structure which we expect any input CSV (including
  * from stdin) to take. This is defined as a Java bean so that it plays
  * nicely with opencsv:
