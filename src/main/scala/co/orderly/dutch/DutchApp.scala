@@ -34,10 +34,11 @@ object DutchApp {
     preUsage = Some("%s: Version %s. Copyright (c) 2012, %s.".format(
       generated.Settings.name,
       generated.Settings.version,
-      generated.Settings.organization))
+      generated.Settings.organization)
+    )
   )
 
-    // Obligatory output file
+  // Obligatory output file
   val output = parser.parameter[String]("outputfile",
                                         "Output CSV file to write",
                                         false)
