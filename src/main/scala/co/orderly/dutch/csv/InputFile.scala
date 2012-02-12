@@ -29,5 +29,17 @@ import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy
 class InputFile {
 
   @BeanProperty
-  var blah: String = _
+  var name: String = _
+
+  @BeanProperty
+  var supplier: String = _
+
+  @BeanProperty
+  var asin: String = _
+
+  @BeanProperty
+  var sku: String = _
+
+  @BeanProperty
+  var isbn: String = _
 }
