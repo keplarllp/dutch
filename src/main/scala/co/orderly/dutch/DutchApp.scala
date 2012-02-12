@@ -22,6 +22,9 @@ import org.clapper.argot._
 // Config
 import com.typesafe.config.{Config, ConfigFactory}
 
+/**
+ * Our entrypoint object for Dutch.
+ */
 object DutchApp {
 
   // Argument specifications
@@ -83,7 +86,9 @@ object DutchApp {
       file
   }
 
-  // Main Dutch program
+  /**
+   * Main Dutch program
+   */
   def main(args: Array[String]) {
 
     try {
