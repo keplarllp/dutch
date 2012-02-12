@@ -90,7 +90,7 @@ object DutchApp {
       // Store start time
       val start = System.nanoTime()
 
-      // Grab the command line arguments, set defaults
+      // Grab the command line arguments
       parser.parse(args)
 
       // Run the pricing module
