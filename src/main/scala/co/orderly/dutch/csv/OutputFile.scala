@@ -13,6 +13,9 @@
 package co.orderly.dutch
 package csv
 
+// Java
+import java.lang.{Float => JFloat}
+
 // Scala
 import scala.reflect.BeanProperty
 
@@ -25,9 +28,18 @@ import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy
  * opencsv:
  *
  *   http://opencsv.sourceforge.net/#javabean-integration
+ * 
+ * OutputFile extends from InputFile because all of the fields from
+ * InputFile are also included in the OutputFile, for simplicity.
  */
-class OutputFile {
+class OutputFile extends InputFile {
 
   @BeanProperty
-  var blah: String = _
+  var amazonPrice: JFloat = _
+  
+  @BeanProperty
+  var merchants: Int = _
+  
+  @BeanProperty
+  var merchantLowestPrice = JFloat = _
 }
