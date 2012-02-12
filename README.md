@@ -17,19 +17,19 @@ Usage of Dutch is as per the command-line help:
     OPTIONS
     -c filename
     --config filename  Configuration file. Defaults to "resources/example.conf"
-		       (within .jar) if not set
+                       (within .jar) if not set
     -n
     --noheader         Flags that input CSV file(s) does not have a header row
     -q sep
     --quote sep        Quote character to use for CSVs (defaults to ")
     -s sep
     --separator sep    Separator character to use for CSVs (defaults to ,). Use \t
-		       for tab
+                       for tab
 
     PARAMETERS
     outputfile  Output CSV file to write
     input       Input CSV file(s) to read. If not specified, uses stdin (May be
-		specified multiple times.)
+                specified multiple times.)
 
 ## Copyright and License
 
