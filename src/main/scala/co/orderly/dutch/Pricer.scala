@@ -72,9 +72,10 @@ request.setASINList(new ASINListType(asins));
                             quoteChar: Char,
                             header: Boolean): List[ProductLine] = input match {
 
-    case Seq() => parseProducts(io.Source.stdin.bufferedReader(), separator, quoteChar, header)
+    case Seq()     => parseProducts(io.Source.stdin.bufferedReader(), separator, quoteChar, header)
     case Seq(file) => parseProducts(new FileReader(file), separator, quoteChar, header)
-    case Seq(file, files@_*) => parseProducts(new FileReader(file), separator, quoteChar, header) ::: getProducts(files, separator, quoteChar, header)
+    case Seq(file, files@_*) => parseProducts(new FileReader(file), separator, quoteChar, header) :::
+                                getProducts(files, separator, quoteChar, header)
   }
 
   /**
