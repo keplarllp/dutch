@@ -58,6 +58,16 @@ case class Pricer(config: Config,
     InputFile.asCsv.parse(InputFile.mappingStrategy, csvReader).foreach(_.debug())
 
     val client = initClient(config.getConfig("merchant"))
+
+    /*
+       GetCompetitivePricingForASINRequest request = new GetCompetitivePricingForASINRequest();
+request.setSellerId(ProductsConfig.sellerId);
+request.setMarketplaceId(ProductsConfig.marketplaceId);
+List<String> asins = new ArrayList<String>();
+asins.add("B004QNYOXQ");
+request.setASINList(new ASINListType(asins));
+     */
+
   }
 
   /**
