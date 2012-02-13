@@ -17,7 +17,7 @@ import java.io.File
 import java.io.FileReader
 
 // Config
-import com.typesafe.config.Config
+import com.typesafe.config.{Config, ConfigFactory}
 
 // Scala
 import scala.collection.JavaConversions._
@@ -25,6 +25,10 @@ import scala.collection.JavaConversions._
 // opencsv
 import au.com.bytecode.opencsv._
 import bean.CsvToBean
+
+// Amazon MWS Products
+import com.amazonservices.mws.products.{MarketplaceWebServiceProductsConfig, MarketplaceWebServiceProductsClient}
+// import com.amazonservices.mws.products.model.*
 
 // Dutch
 import csv._
@@ -42,7 +46,7 @@ case class Pricer(config: Config,
   /**
    * Executes a pricing run
    */
-  def run() { // TODO: change Seq[File] to Iterator[String]
+  def run() {
     Console.println("Running pricing!")
 
     // for( ln <- io.Source.stdin.getLines ) println( ln )
@@ -52,5 +56,35 @@ case class Pricer(config: Config,
     // TODO: eurgh, assumes one file passed in
     val csvReader = new CSVReader(new FileReader(input(0)), separator, quoteChar, line)
     InputFile.asCsv.parse(InputFile.mappingStrategy, csvReader).foreach(_.debug())
+
+    val client = initClient(config.getConfig("merchant"))
+  }
+
+  /**
+   * Initializes an Amazon MWS Products Client
+   */
+  protected def initClient(config: Config) = new MarketplaceWebServiceProductsClient(
+    config.getString("key"),     // awsAccessKeyId
+    config.getString("secret"),  // awsSecretAccessKey
+    config.getString("app"),     // applicationName
+    config.getString("version"), // applicationVersion
+    initClientConfig(config.getString("locale")) // config
+  )
+
+  /**
+   * Initializes an MWS Products Config using the
+   * appropriate endpoint and version (which are
+   * defined in resources/mws.conf)
+   */
+  protected def initClientConfig(locale: String) = {
+
+    val config = ConfigFactory.load("mws").getConfig("mws")
+    val serviceUrl = "%s/%s".format(config.getConfig("endpoints").getString(locale), config.getString("version"))
+    Console.println(serviceUrl)
+
+    val clientConfig = new MarketplaceWebServiceProductsConfig()
+    clientConfig.setServiceURL(serviceUrl)
+
+    clientConfig
   }
 }

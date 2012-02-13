@@ -30,7 +30,10 @@ object DutchBuild extends Build {
       libraryDependencies ++= Seq(
         Libraries.argot,
         Libraries.config,
-        Libraries.opencsv
+        Libraries.opencsv,
+        MWS.logging,
+        MWS.httpCore,
+        MWS.httpClient
       )
     )
 }
