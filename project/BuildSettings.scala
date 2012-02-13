@@ -21,7 +21,8 @@ object BuildSettings {
     version       := "0.1",
     description   := "A command-line tool for monitoring competitors' prices on Amazon Marketplace",
     scalaVersion  := "2.9.1",
-    scalacOptions := Seq("-deprecation", "-encoding", "utf8")
+    scalacOptions := Seq("-deprecation", "-encoding", "utf8"),
+    resolvers     ++= Dependencies.resolutionRepos
   )
 
   // Makes our SBT app settings available from within the app
