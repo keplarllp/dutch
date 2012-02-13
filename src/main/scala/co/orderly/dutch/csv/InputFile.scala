@@ -15,22 +15,37 @@ package csv
 
 // Scala
 import scala.reflect.BeanProperty
+import au.com.bytecode.opencsv.bean.{CsvToBean, ColumnPositionMappingStrategy}
 
 // opencsv
-import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy
-
 /**
  * Companion object for InputFile, containing the ColumnPositionMappingStrategy
  * generator which uses InputFile
  */
 object InputFile {
-  ColumnPositionMappingStrategy strat = new ColumnPositionMappingStrategy();
-strat.setType(YourOrderBean.class);
-String[] columns = new String[] {"name", "orderNumber", "id"}; // the fields to bind do in your JavaBean
-strat.setColumnMapping(columns);
 
-CsvToBean csv = new CsvToBean();
-List list = csv.parse(strat, yourReader);
+  // The columns in an input file
+  private val columns = Array("name", "supplier", "asin", "sku", "isbn")
+
+  /**
+   * Returns the mapping strategy for this InputFile.
+   * The mapping strategy is positional (rather than
+   * column name based), because our input file(s)
+   * may not come with a header row.
+   */
+  def mappingStrategy = {
+
+    val strat = new ColumnPositionMappingStrategy[InputFile]()
+    strat.setType(classOf[InputFile])
+    strat.setColumnMapping(columns)
+
+    strat
+  }
+
+  /**
+   * Creates a typed CsvToBean for InputFile
+   */
+  def asCsv = new CsvToBean[InputFile]()
 }
 
 /**
@@ -56,4 +71,8 @@ class InputFile {
 
   @BeanProperty
   var isbn: String = _
+
+  def debug() {
+    Console.println("%s:%s:%s:%s:%s".format(name, supplier, asin, sku, isbn))
+  }
 }

@@ -100,11 +100,11 @@ object DutchApp {
 
       // Run the pricing module
       Pricer(config = config.value.getOrElse(ConfigFactory.load("merchant")), // Fall back to the /resources/merchant.conf
-            line = if (noHeader.value.getOrElse(false)) 0 else 1, // Number of rows to skip
-            separator = separator.value.getOrElse(','),
-            quoteChar = quoteChar.value.getOrElse('\"'),
-            input = input.value,
-            output = output.value.get
+             input = input.value,
+             separator = separator.value.getOrElse(','),
+             quoteChar = quoteChar.value.getOrElse('\"'),
+             header = !(noHeader.value.getOrElse(false)),
+             output = output.value.get
       ).run()
 
       // Print how long this took

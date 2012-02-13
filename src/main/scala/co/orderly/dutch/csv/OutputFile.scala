@@ -41,5 +41,5 @@ class OutputFile extends InputFile {
   var merchants: Int = _
   
   @BeanProperty
-  var merchantLowestPrice = JFloat = _
+  var merchantLowestPrice: JFloat = _
 }
