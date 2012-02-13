@@ -87,7 +87,7 @@ request.setASINList(new ASINListType(asins));
                               quoteChar: Char,
                               header: Boolean): List[ProductLine] = {
 
-    val line = if (header) 1 else 0
+    val line = if (header) 1 else 0 // Number of rows to skip
     val csvReader = new CSVReader(input, separator, quoteChar, line)
 
     ProductLine.asCsv.parse(ProductLine.mappingStrategy, csvReader).asScala.toList
