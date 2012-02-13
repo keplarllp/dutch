@@ -1,0 +1,3 @@
+name,supplier,asin,sku,isbn
+"Test product 3","Test supplier",1234,5678,9012
+"Product 4","New supplier",45,12,34

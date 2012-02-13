@@ -15,28 +15,29 @@ package csv
 
 // Scala
 import scala.reflect.BeanProperty
-import au.com.bytecode.opencsv.bean.{CsvToBean, ColumnPositionMappingStrategy}
 
 // opencsv
+import au.com.bytecode.opencsv.bean.{CsvToBean, ColumnPositionMappingStrategy}
+
 /**
- * Companion object for InputFile, containing the ColumnPositionMappingStrategy
- * generator which uses InputFile
+ * Companion object for ProductLine, containing the ColumnPositionMappingStrategy
+ * generator which uses ProductLine
  */
-object InputFile {
+object ProductLine {
 
   // The columns in an input file
   private val columns = Array("name", "supplier", "asin", "sku", "isbn")
 
   /**
-   * Returns the mapping strategy for this InputFile.
+   * Returns the mapping strategy for this ProductLine.
    * The mapping strategy is positional (rather than
    * column name based), because our input file(s)
    * may not come with a header row.
    */
   def mappingStrategy = {
 
-    val strat = new ColumnPositionMappingStrategy[InputFile]()
-    strat.setType(classOf[InputFile])
+    val strat = new ColumnPositionMappingStrategy[ProductLine]()
+    strat.setType(classOf[ProductLine])
     strat.setColumnMapping(columns)
 
     strat
@@ -45,7 +46,7 @@ object InputFile {
   /**
    * Creates a typed CsvToBean for InputFile
    */
-  def asCsv = new CsvToBean[InputFile]()
+  def asCsv = new CsvToBean[ProductLine]()
 }
 
 /**
@@ -55,7 +56,7 @@ object InputFile {
  *
  *   http://opencsv.sourceforge.net/#javabean-integration
  */
-class InputFile {
+class ProductLine {
 
   @BeanProperty
   var name: String = _

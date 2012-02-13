@@ -14,13 +14,13 @@ package co.orderly.dutch
 
 // Java
 import java.io.File
-import java.io.FileReader
+import java.io.{Reader, FileReader}
 
 // Config
 import com.typesafe.config.{Config, ConfigFactory}
 
 // Scala
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 
 // opencsv
 import au.com.bytecode.opencsv._
@@ -47,20 +47,12 @@ case class Pricer(config: Config,
    * Executes a pricing run
    */
   def run() {
-    Console.println("Running pricing!")
 
-    // for( ln <- io.Source.stdin.getLines ) println( ln )
-
-    val line = if (header) 1 else 0
-
-    // TODO: eurgh, assumes one file passed in
-    val csvReader = new CSVReader(new FileReader(input(0)), separator, quoteChar, line)
-    InputFile.asCsv.parse(InputFile.mappingStrategy, csvReader).foreach(_.debug())
-
-    val client = initClient(config.getConfig("merchant"))
+    getProducts(input, separator, quoteChar, header).foreach(_.debug())
+    // val client = initClient(config.getConfig("merchant"))
 
     /*
-       GetCompetitivePricingForASINRequest request = new GetCompetitivePricingForASINRequest();
+       val request = new GetCompetitivePricingForASINRequest()
 request.setSellerId(ProductsConfig.sellerId);
 request.setMarketplaceId(ProductsConfig.marketplaceId);
 List<String> asins = new ArrayList<String>();
@@ -68,6 +60,36 @@ asins.add("B004QNYOXQ");
 request.setASINList(new ASINListType(asins));
      */
 
+  }
+
+  /**
+   * Recursive function to extract all of the product lines from
+   * 1+ input files OR stdin. Calls parseInput to do the heavy
+   * lifting.
+   */
+  protected def getProducts(input: Seq[File],
+                            separator: Char,
+                            quoteChar: Char,
+                            header: Boolean): List[ProductLine] = input match {
+
+    case Seq() => parseProducts(io.Source.stdin.bufferedReader(), separator, quoteChar, header)
+    case Seq(file) => parseProducts(new FileReader(file), separator, quoteChar, header)
+    case Seq(file, files@_*) => parseProducts(new FileReader(file), separator, quoteChar, header) ::: getProducts(files, separator, quoteChar, header)
+  }
+
+  /**
+   * Parses an input (either stdin or a file) using opencsv to
+   * extract the ProductLines from it
+   */
+  protected def parseProducts(input: Reader,
+                              separator: Char,
+                              quoteChar: Char,
+                              header: Boolean): List[ProductLine] = {
+
+    val line = if (header) 1 else 0
+    val csvReader = new CSVReader(input, separator, quoteChar, line)
+
+    ProductLine.asCsv.parse(ProductLine.mappingStrategy, csvReader).asScala.toList
   }
 
   /**

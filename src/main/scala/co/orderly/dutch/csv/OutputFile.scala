@@ -32,7 +32,7 @@ import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy
  * OutputFile extends from InputFile because all of the fields from
  * InputFile are also included in the OutputFile, for simplicity.
  */
-class OutputFile extends InputFile {
+class OutputFile extends ProductLine { // TODO: rename this (or maybe delete it?)
 
   @BeanProperty
   var amazonPrice: JFloat = _
