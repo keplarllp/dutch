@@ -75,6 +75,8 @@ case class Pricer(config: Config,
     val products = getProducts(input)
     products.foreach(_.debug()) // TODO: remove
 
+    // TODO: need to add a loop to deal with fact that max ASINs per request is 20
+
     val request = new GetCompetitivePricingForASINRequest()
     request.setSellerId(PricerConfig.seller)
     request.setMarketplaceId(PricerConfig.marketplace)
@@ -89,7 +91,7 @@ case class Pricer(config: Config,
    * Implicit conversion.
    */
   protected implicit def products2AsinListType(products: List[ProductLine]): ASINListType =
-    new ASINListType(products.map(_.isbn)) // For now let's just use ISBN to be ASIN
+    new ASINListType(products.map(_.asin)) // For now let's just use ISBN to be ASIN
 
   /**
    * Recursive function to extract all of the product lines from
