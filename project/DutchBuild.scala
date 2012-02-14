@@ -31,9 +31,10 @@ object DutchBuild extends Build {
         Libraries.argot,
         Libraries.config,
         Libraries.opencsv,
-        MWS.logging,
-        MWS.httpCore,
-        MWS.httpClient
+        Mws.logging,
+        Mws.log4j,
+        Mws.http,
+        Mws.codec
       )
     )
 }

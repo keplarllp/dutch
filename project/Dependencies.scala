@@ -19,30 +19,36 @@ object Dependencies {
   )
 
   object V {
+    // Libraries for Pricer
     val config    = "0.2.1"
     val argot     = "0.3.5"
     val opencsv   = "2.0"
-    val logging   = "1.1.1"
-    val http      = "4.1.1"
+
+    // MWS - all the versions which come bundled with amazon-mws-v20111001-java-2012-01-01._V139771867_.zip
+    val logging   = "1.1"
+    val log4j     = "1.2.14"
+    val http      = "3.0.1"
+    val codec     = "1.3"
   }
 
   object Libraries {
     // Used for Typesafe Config
-    val config      = "com.typesafe.config"              % "config"           % V.config
+    val config      = "com.typesafe.config"        % "config"               % V.config
 
     // User for Argot
-    val argot       = "org.clapper"                      % "argot_2.9.0"      % V.argot
+    val argot       = "org.clapper"                % "argot_2.9.0"          % V.argot
 
     // Used for reading/writing CSV files
-    val opencsv     = "net.sf.opencsv"                   % "opencsv"          % V.opencsv
+    val opencsv     = "net.sf.opencsv"             % "opencsv"              % V.opencsv
   }
 
-  object MWS {
+  object Mws {
     // Logging
-    val logging     = "commons-logging"                  % "commons-logging"  % V.logging
+    val logging     = "commons-logging"            % "commons-logging"      % V.logging
+    val log4j       = "log4j"                      % "log4j"                % V.log4j
 
     // Apache HttpClient
-    val httpCore    = "org.apache.httpcomponents"      % "httpcore"         % V.http
-    val httpClient  = "org.apache.httpcomponents"      % "httpclient"       % V.http
+    val http        = "commons-httpclient"         % "commons-httpclient"   % V.http
+    val codec       = "commons-codec"              % "commons-codec"        % V.codec
   }
 }

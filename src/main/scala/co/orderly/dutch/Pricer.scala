@@ -14,7 +14,7 @@ package co.orderly.dutch
 
 // Java
 import java.io.File
-import java.io.{Reader, FileReader}
+import java.io.{Reader, FileReader => FR}
 
 // Config
 import com.typesafe.config.{Config, ConfigFactory}
@@ -24,11 +24,10 @@ import scala.collection.JavaConverters._
 
 // opencsv
 import au.com.bytecode.opencsv._
-import bean.CsvToBean
 
 // Amazon MWS Products
 import com.amazonservices.mws.products.{MarketplaceWebServiceProductsConfig, MarketplaceWebServiceProductsClient}
-// import com.amazonservices.mws.products.model.*
+import com.amazonservices.mws.products.model.{ASINListType, GetCompetitivePricingForASINRequest}
 
 // Dutch
 import csv._
@@ -44,21 +43,45 @@ case class Pricer(config: Config,
                   output: String) {
 
   /**
+   * Immediately construct a PricerConfig object which
+   * holds all of our configuration variables (not
+   * including the ones from the case class'
+   * constructor).
+   */
+  object PricerConfig {
+
+    // From the merchant Config
+    private val merchant = config.getConfig("merchant")
+    private val locale   = merchant.getString("locale")
+    val seller      = merchant.getString("seller")
+    val marketplace = merchant.getString("marketplace")
+    val key         = merchant.getString("key")
+    val secret      = merchant.getString("secret")
+
+    // From the mws Config
+    private val mws = ConfigFactory.load("mws").getConfig("mws")
+    private val endpoint   = mws.getConfig("endpoints").getString(locale) // Locale is the key into the endpoints hash
+    private val apiVersion = mws.getString("version")
+    val url = "%s/%s".format(endpoint, apiVersion)
+  }
+
+  /**
    * Executes a pricing run
    */
   def run() {
 
     getProducts(input).foreach(_.debug())
-    // val client = initClient(config.getConfig("merchant"))
+    val service = initService()
 
-    /*
-       val request = new GetCompetitivePricingForASINRequest()
-request.setSellerId(ProductsConfig.sellerId);
-request.setMarketplaceId(ProductsConfig.marketplaceId);
-List<String> asins = new ArrayList<String>();
-asins.add("B004QNYOXQ");
-request.setASINList(new ASINListType(asins));
-     */
+    val request = new GetCompetitivePricingForASINRequest()
+    request.setSellerId(PricerConfig.seller)
+    request.setMarketplaceId(PricerConfig.marketplace)
+
+    val asins = new java.util.ArrayList[String]()
+    asins.add("B004QNYOXQ")
+    request.setASINList(new ASINListType(asins))
+
+    val response = service.getCompetitivePricingForASIN(request)
 
   }
 
@@ -70,13 +93,13 @@ request.setASINList(new ASINListType(asins));
   protected def getProducts(input: Seq[File]): List[ProductLine] = input match {
 
     case Seq()     => parseProducts(io.Source.stdin.bufferedReader())
-    case Seq(file) => parseProducts(new FileReader(file))
-    case Seq(file, files@_*) => parseProducts(new FileReader(file)) ::: getProducts(files)
+    case Seq(file) => parseProducts(new FR(file))
+    case Seq(file, files@_*) => parseProducts(new FR(file)) ::: getProducts(files)
   }
 
   /**
-   * Parses an input (either stdin or a file) using opencsv to
-   * extract the ProductLines from it
+   * Parses an input Reader using opencsv to extract the
+   * ProductLines from it.
    */
   protected def parseProducts(input: Reader): List[ProductLine] = {
 
@@ -89,12 +112,12 @@ request.setASINList(new ASINListType(asins));
   /**
    * Initializes an Amazon MWS Products Client
    */
-  protected def initClient(config: Config) = new MarketplaceWebServiceProductsClient(
-    config.getString("key"),     // awsAccessKeyId
-    config.getString("secret"),  // awsSecretAccessKey
-    config.getString("app"),     // applicationName
-    config.getString("version"), // applicationVersion
-    initClientConfig(config.getString("locale")) // config
+  protected def initService() = new MarketplaceWebServiceProductsClient(
+    PricerConfig.key,           // awsAccessKeyId
+    PricerConfig.secret,        // awsSecretAccessKey
+    generated.Settings.name,    // applicationName
+    generated.Settings.version, // applicationVersion
+    initConfig                  // config
   )
 
   /**
@@ -102,15 +125,9 @@ request.setASINList(new ASINListType(asins));
    * appropriate endpoint and version (which are
    * defined in resources/mws.conf)
    */
-  protected def initClientConfig(locale: String) = {
-
-    val config = ConfigFactory.load("mws").getConfig("mws")
-    val serviceUrl = "%s/%s".format(config.getConfig("endpoints").getString(locale), config.getString("version"))
-    Console.println(serviceUrl)
-
-    val clientConfig = new MarketplaceWebServiceProductsConfig()
-    clientConfig.setServiceURL(serviceUrl)
-
-    clientConfig
+  protected def initConfig = {
+    val serviceConfig = new MarketplaceWebServiceProductsConfig()
+    serviceConfig.setServiceURL(PricerConfig.url)
+    serviceConfig
   }
 }
