@@ -71,18 +71,19 @@ case class Pricer(config: Config,
   def run() {
 
     getProducts(input).foreach(_.debug())
-    val service = initService()
+    val service = initService
 
     val request = new GetCompetitivePricingForASINRequest()
     request.setSellerId(PricerConfig.seller)
     request.setMarketplaceId(PricerConfig.marketplace)
 
     val asins = new java.util.ArrayList[String]()
-    asins.add("B004QNYOXQ")
+    asins.add("0712670572")
     request.setASINList(new ASINListType(asins))
 
     val response = service.getCompetitivePricingForASIN(request)
 
+    GetCompetitivePricingForASINAdapted.invokeGetCompetitivePricingForASIN(service, request)
   }
 
   /**
@@ -112,7 +113,7 @@ case class Pricer(config: Config,
   /**
    * Initializes an Amazon MWS Products Client
    */
-  protected def initService() = new MarketplaceWebServiceProductsClient(
+  protected def initService = new MarketplaceWebServiceProductsClient(
     PricerConfig.key,           // awsAccessKeyId
     PricerConfig.secret,        // awsSecretAccessKey
     generated.Settings.name,    // applicationName
