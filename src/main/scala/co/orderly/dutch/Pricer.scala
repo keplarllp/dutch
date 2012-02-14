@@ -48,7 +48,7 @@ case class Pricer(config: Config,
    */
   def run() {
 
-    getProducts(input, separator, quoteChar, header).foreach(_.debug())
+    getProducts(input).foreach(_.debug())
     // val client = initClient(config.getConfig("merchant"))
 
     /*
@@ -67,25 +67,18 @@ request.setASINList(new ASINListType(asins));
    * 1+ input files OR stdin. Calls parseInput to do the heavy
    * lifting.
    */
-  protected def getProducts(input: Seq[File],
-                            separator: Char,
-                            quoteChar: Char,
-                            header: Boolean): List[ProductLine] = input match {
+  protected def getProducts(input: Seq[File]): List[ProductLine] = input match {
 
-    case Seq()     => parseProducts(io.Source.stdin.bufferedReader(), separator, quoteChar, header)
-    case Seq(file) => parseProducts(new FileReader(file), separator, quoteChar, header)
-    case Seq(file, files@_*) => parseProducts(new FileReader(file), separator, quoteChar, header) :::
-                                getProducts(files, separator, quoteChar, header)
+    case Seq()     => parseProducts(io.Source.stdin.bufferedReader())
+    case Seq(file) => parseProducts(new FileReader(file))
+    case Seq(file, files@_*) => parseProducts(new FileReader(file)) ::: getProducts(files)
   }
 
   /**
    * Parses an input (either stdin or a file) using opencsv to
    * extract the ProductLines from it
    */
-  protected def parseProducts(input: Reader,
-                              separator: Char,
-                              quoteChar: Char,
-                              header: Boolean): List[ProductLine] = {
+  protected def parseProducts(input: Reader): List[ProductLine] = {
 
     val line = if (header) 1 else 0 // Number of rows to skip
     val csvReader = new CSVReader(input, separator, quoteChar, line)
