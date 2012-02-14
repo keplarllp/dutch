@@ -30,158 +30,112 @@ public class GetCompetitivePricingForASINSample {
 
             System.out.println ("GetCompetitivePricingForASIN Action Response");
             System.out.println ("=============================================================================");
-            System.out.println ();
 
             System.out.println("    GetCompetitivePricingForASINResponse");
-            System.out.println();
             java.util.List<GetCompetitivePricingForASINResult> getCompetitivePricingForASINResultList = response.getGetCompetitivePricingForASINResult();
             for (GetCompetitivePricingForASINResult getCompetitivePricingForASINResult : getCompetitivePricingForASINResultList) {
                 System.out.println("        GetCompetitivePricingForASINResult");
-                System.out.println();
             if (getCompetitivePricingForASINResult.isSetASIN()) {
                 System.out.println("        ASIN");
-                System.out.println();
                 System.out.println("            " + getCompetitivePricingForASINResult.getASIN());
-                System.out.println();
             }
             if (getCompetitivePricingForASINResult.isSetStatus()) {
                 System.out.println("        status");
-                System.out.println();
                 System.out.println("            " + getCompetitivePricingForASINResult.getStatus());
-                System.out.println();
             }
                 if (getCompetitivePricingForASINResult.isSetProduct()) {
                     System.out.println("            Product");
-                    System.out.println();
                     Product  product = getCompetitivePricingForASINResult.getProduct();
                     if (product.isSetIdentifiers()) {
                         System.out.println("                Identifiers");
-                        System.out.println();
                         IdentifierType  identifiers = product.getIdentifiers();
                         if (identifiers.isSetMarketplaceASIN()) {
                             System.out.println("                    MarketplaceASIN");
-                            System.out.println();
                             ASINIdentifier  marketplaceASIN = identifiers.getMarketplaceASIN();
                             if (marketplaceASIN.isSetMarketplaceId()) {
                                 System.out.println("                        MarketplaceId");
-                                System.out.println();
                                 System.out.println("                            " + marketplaceASIN.getMarketplaceId());
-                                System.out.println();
                             }
                             if (marketplaceASIN.isSetASIN()) {
                                 System.out.println("                        ASIN");
-                                System.out.println();
                                 System.out.println("                            " + marketplaceASIN.getASIN());
-                                System.out.println();
                             }
                         }
                         if (identifiers.isSetSKUIdentifier()) {
                             System.out.println("                    SKUIdentifier");
-                            System.out.println();
                             SellerSKUIdentifier  SKUIdentifier = identifiers.getSKUIdentifier();
                             if (SKUIdentifier.isSetMarketplaceId()) {
                                 System.out.println("                        MarketplaceId");
-                                System.out.println();
                                 System.out.println("                            " + SKUIdentifier.getMarketplaceId());
-                                System.out.println();
                             }
                             if (SKUIdentifier.isSetSellerId()) {
                                 System.out.println("                        SellerId");
-                                System.out.println();
                                 System.out.println("                            " + SKUIdentifier.getSellerId());
-                                System.out.println();
                             }
                             if (SKUIdentifier.isSetSellerSKU()) {
                                 System.out.println("                        SellerSKU");
-                                System.out.println();
                                 System.out.println("                            " + SKUIdentifier.getSellerSKU());
-                                System.out.println();
                             }
                         }
                     }
                     if (product.isSetCompetitivePricing()) {
                         System.out.println("                CompetitivePricing");
-                        System.out.println();
                         CompetitivePricingType  competitivePricing = product.getCompetitivePricing();
                         if (competitivePricing.isSetCompetitivePrices()) {
                             System.out.println("                    CompetitivePrices");
-                            System.out.println();
                             CompetitivePriceList  competitivePrices = competitivePricing.getCompetitivePrices();
                             java.util.List<CompetitivePriceType> competitivePriceList = competitivePrices.getCompetitivePrice();
                             for (CompetitivePriceType competitivePrice : competitivePriceList) {
                                 System.out.println("                        CompetitivePrice");
-                                System.out.println();
                             if (competitivePrice.isSetCondition()) {
                                 System.out.println("                        condition");
-                                System.out.println();
                                 System.out.println("                            " + competitivePrice.getCondition());
-                                System.out.println();
                             }
                             if (competitivePrice.isSetBelongsToRequester()) {
                                 System.out.println("                        belongsToRequester");
-                                System.out.println();
                                 System.out.println("                            " + competitivePrice.isBelongsToRequester());
-                                System.out.println();
                             }
                                 if (competitivePrice.isSetCompetitivePriceId()) {
                                     System.out.println("                            CompetitivePriceId");
-                                    System.out.println();
                                     System.out.println("                                " + competitivePrice.getCompetitivePriceId());
-                                    System.out.println();
                                 }
                                 if (competitivePrice.isSetPrice()) {
                                     System.out.println("                            Price");
-                                    System.out.println();
                                     PriceType  price = competitivePrice.getPrice();
                                     if (price.isSetLandedPrice()) {
                                         System.out.println("                                LandedPrice");
-                                        System.out.println();
                                         MoneyType  landedPrice = price.getLandedPrice();
                                         if (landedPrice.isSetCurrencyCode()) {
                                             System.out.println("                                    CurrencyCode");
-                                            System.out.println();
                                             System.out.println("                                        " + landedPrice.getCurrencyCode());
-                                            System.out.println();
                                         }
                                         if (landedPrice.isSetAmount()) {
                                             System.out.println("                                    Amount");
-                                            System.out.println();
                                             System.out.println("                                        " + landedPrice.getAmount());
-                                            System.out.println();
                                         }
                                     }
                                     if (price.isSetListingPrice()) {
                                         System.out.println("                                ListingPrice");
-                                        System.out.println();
                                         MoneyType  listingPrice = price.getListingPrice();
                                         if (listingPrice.isSetCurrencyCode()) {
                                             System.out.println("                                    CurrencyCode");
-                                            System.out.println();
                                             System.out.println("                                        " + listingPrice.getCurrencyCode());
-                                            System.out.println();
                                         }
                                         if (listingPrice.isSetAmount()) {
                                             System.out.println("                                    Amount");
-                                            System.out.println();
                                             System.out.println("                                        " + listingPrice.getAmount());
-                                            System.out.println();
                                         }
                                     }
                                     if (price.isSetShipping()) {
                                         System.out.println("                                Shipping");
-                                        System.out.println();
                                         MoneyType  shipping = price.getShipping();
                                         if (shipping.isSetCurrencyCode()) {
                                             System.out.println("                                    CurrencyCode");
-                                            System.out.println();
                                             System.out.println("                                        " + shipping.getCurrencyCode());
-                                            System.out.println();
                                         }
                                         if (shipping.isSetAmount()) {
                                             System.out.println("                                    Amount");
-                                            System.out.println();
                                             System.out.println("                                        " + shipping.getAmount());
-                                            System.out.println();
                                         }
                                     }
                                 }

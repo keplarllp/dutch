@@ -15,11 +15,13 @@ package co.orderly.dutch
 // Java
 import java.io.File
 import java.io.{Reader, FileReader => FR}
+import java.util.ArrayList
 
 // Config
 import com.typesafe.config.{Config, ConfigFactory}
 
 // Scala
+import scala.collection.JavaConversions._
 import scala.collection.JavaConverters._
 
 // opencsv
@@ -70,21 +72,24 @@ case class Pricer(config: Config,
    */
   def run() {
 
-    getProducts(input).foreach(_.debug())
-    val service = initService
+    val products = getProducts(input)
+    products.foreach(_.debug()) // TODO: remove
 
     val request = new GetCompetitivePricingForASINRequest()
     request.setSellerId(PricerConfig.seller)
     request.setMarketplaceId(PricerConfig.marketplace)
+    request.setASINList(products)
 
-    val asins = new java.util.ArrayList[String]()
-    asins.add("0712670572")
-    request.setASINList(new ASINListType(asins))
-
-    val response = service.getCompetitivePricingForASIN(request)
-
+    val service = initService
     GetCompetitivePricingForASINAdapted.invokeGetCompetitivePricingForASIN(service, request)
   }
+
+  /**
+   * Build the ASIN list from the list of ProductLines.
+   * Implicit conversion.
+   */
+  protected implicit def products2AsinListType(products: List[ProductLine]): ASINListType =
+    new ASINListType(products.map(_.isbn)) // For now let's just use ISBN to be ASIN
 
   /**
    * Recursive function to extract all of the product lines from

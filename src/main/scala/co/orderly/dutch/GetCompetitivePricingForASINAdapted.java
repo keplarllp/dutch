@@ -31,6 +31,17 @@ public class GetCompetitivePricingForASINAdapted {
             for (GetCompetitivePricingForASINResult getCompetitivePricingForASINResult : getCompetitivePricingForASINResultList) {
                 if (getCompetitivePricingForASINResult.isSetProduct()) {
                     Product  product = getCompetitivePricingForASINResult.getProduct();
+                    if (product.isSetIdentifiers()) {
+                        IdentifierType  identifiers = product.getIdentifiers();
+                        if (identifiers.isSetMarketplaceASIN()) {
+                            System.out.println("                    MarketplaceASIN");
+                            ASINIdentifier  marketplaceASIN = identifiers.getMarketplaceASIN();
+                            if (marketplaceASIN.isSetASIN()) {
+                                System.out.println("                        ASIN");
+                                System.out.println("                            " + marketplaceASIN.getASIN());
+                            }
+                        }
+                    }
                     if (product.isSetCompetitivePricing()) {
                         CompetitivePricingType  competitivePricing = product.getCompetitivePricing();
                         if (competitivePricing.isSetCompetitivePrices()) {
@@ -41,36 +52,36 @@ public class GetCompetitivePricingForASINAdapted {
                                     PriceType  price = competitivePrice.getPrice();
                                     if (price.isSetLandedPrice()) {
                                         System.out.println("                                LandedPrice");
-                                        System.out.println();
+                                         
                                         MoneyType  landedPrice = price.getLandedPrice();
                                         if (landedPrice.isSetCurrencyCode()) {
                                             System.out.println("                                    CurrencyCode");
-                                            System.out.println();
+                                             
                                             System.out.println("                                        " + landedPrice.getCurrencyCode());
-                                            System.out.println();
+                                             
                                         }
                                         if (landedPrice.isSetAmount()) {
                                             System.out.println("                                    Amount");
-                                            System.out.println();
+                                             
                                             System.out.println("                                        " + landedPrice.getAmount());
-                                            System.out.println();
+                                             
                                         }
                                     }
                                     if (price.isSetShipping()) {
                                         System.out.println("                                Shipping");
-                                        System.out.println();
+                                         
                                         MoneyType  shipping = price.getShipping();
                                         if (shipping.isSetCurrencyCode()) {
                                             System.out.println("                                    CurrencyCode");
-                                            System.out.println();
+                                             
                                             System.out.println("                                        " + shipping.getCurrencyCode());
-                                            System.out.println();
+                                             
                                         }
                                         if (shipping.isSetAmount()) {
                                             System.out.println("                                    Amount");
-                                            System.out.println();
+                                             
                                             System.out.println("                                        " + shipping.getAmount());
-                                            System.out.println();
+                                             
                                         }
                                     }
                                 }
@@ -78,21 +89,21 @@ public class GetCompetitivePricingForASINAdapted {
                         }
                         if (competitivePricing.isSetNumberOfOfferListings()) {
                             System.out.println("                    NumberOfOfferListings");
-                            System.out.println();
+                             
                             NumberOfOfferListingsList  numberOfOfferListings = competitivePricing.getNumberOfOfferListings();
                             java.util.List<OfferListingCountType> offerListingCountList = numberOfOfferListings.getOfferListingCount();
                             for (OfferListingCountType offerListingCount : offerListingCountList) {
                                 System.out.println("                        OfferListingCount");
-                                System.out.println();
+                                 
                                 if (offerListingCount.isSetCondition()) {
                                     System.out.println("                        condition");
-                                    System.out.println();
+                                     
                                     System.out.println("                            " + offerListingCount.getCondition());
-                                    System.out.println();
+                                     
                                 }
                                 if (offerListingCount.isSetValue()) {
                                     System.out.println("                        Value");
-                                    System.out.println();
+                                     
                                     System.out.println("                            " + offerListingCount.getValue());
                                 }
                             }
@@ -101,25 +112,25 @@ public class GetCompetitivePricingForASINAdapted {
                 }
                 if (getCompetitivePricingForASINResult.isSetError()) {
                     System.out.println("            Error");
-                    System.out.println();
+                     
                     com.amazonservices.mws.products.model.Error  error = getCompetitivePricingForASINResult.getError();
                     if (error.isSetType()) {
                         System.out.println("                Type");
-                        System.out.println();
+                         
                         System.out.println("                    " + error.getType());
-                        System.out.println();
+                         
                     }
                     if (error.isSetCode()) {
                         System.out.println("                Code");
-                        System.out.println();
+                         
                         System.out.println("                    " + error.getCode());
-                        System.out.println();
+                         
                     }
                     if (error.isSetMessage()) {
                         System.out.println("                Message");
-                        System.out.println();
+                         
                         System.out.println("                    " + error.getMessage());
-                        System.out.println();
+                         
                     }
                 }
             }
