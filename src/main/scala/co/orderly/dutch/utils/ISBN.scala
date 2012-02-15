@@ -14,10 +14,11 @@ package co.orderly.dutch
 package utils
 
 /**
- *
+ * Module containing helper functions for ISBN manipulation
  */
-class ISBN extends ProductLine { // TODO: rename this (or maybe delete it?)
+object ISBN {
 
+  // Regexp to extract the significant 9 digits from an ISBN-13
   protected val Isbn13 = """^\d{3}[-|\s]?(\d{9})[\d|X]$""".r
 
   /**
@@ -32,16 +33,16 @@ class ISBN extends ProductLine { // TODO: rename this (or maybe delete it?)
   /**
    * Calculate a checksum for a partial ISBN
    */
-  protected def checksum(partial): Char = {
+  protected def checksum(partial: String): Char = {
 
     val weight = (10 to 1 by -1).toList
-    val checksum = 11 - ((partial.toList(), weight).zipped.map{ case (c, w) => c.asDigit * w }.reduceLeft(_+_) % 11)
+    val checksum = 11 - ((partial.toList, weight).zipped.map{ case (c, w) => c.asDigit * w }.reduceLeft(_+_) % 11)
 
     // Finally what we return depends on the checksum value
     checksum match {
       case 10 => 'X'
-      case 11 => "0"
-      case _  => checksum
+      case 11 => '0'
+      case _  => Character.forDigit(checksum, 10)
     }
   }
 }
