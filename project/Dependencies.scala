@@ -19,10 +19,11 @@ object Dependencies {
   )
 
   object V {
-    // Libraries for Pricer
+    // Libraries for Dutch
     val config    = "0.2.1"
     val argot     = "0.3.5"
     val opencsv   = "2.0"
+    val specs2    = "1.8"
 
     // MWS - all the versions which come bundled with amazon-mws-v20111001-java-2012-01-01._V139771867_.zip
     val logging   = "1.1"
@@ -40,6 +41,9 @@ object Dependencies {
 
     // Used for reading/writing CSV files
     val opencsv     = "net.sf.opencsv"             % "opencsv"              % V.opencsv
+
+    // Used for testing
+    val specs2      = "org.specs2"                 % "specs2"               % V.specs2
   }
 
   object Mws {

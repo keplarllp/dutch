@@ -16,7 +16,7 @@ package utils
 /**
  * Module containing helper functions for ISBN manipulation
  */
-object ISBN {
+object Isbn {
 
   // Regexp to extract the significant 9 digits from an ISBN-13
   protected val Isbn13 = """^\d{3}[-|\s]?(\d{9})[\d|X]$""".r
