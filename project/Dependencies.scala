@@ -34,25 +34,21 @@ object Dependencies {
 
   object Libraries {
     // Used for Typesafe Config
-    val config      = "com.typesafe.config"        % "config"               % V.config
-
+    val config      = "com.typesafe.config"        %  "config"               % V.config
     // User for Argot
-    val argot       = "org.clapper"                % "argot_2.9.0"          % V.argot
-
+    val argot       = "org.clapper"                %% "argot"                % V.argot
     // Used for reading/writing CSV files
-    val opencsv     = "net.sf.opencsv"             % "opencsv"              % V.opencsv
-
+    val opencsv     = "net.sf.opencsv"             %  "opencsv"              % V.opencsv
     // Used for testing
-    val specs2      = "org.specs2"                 % "specs2"               % V.specs2
+    val specs2      = "org.specs2"                 %% "specs2"               % V.specs2      % "test"
   }
 
   object Mws {
     // Logging
-    val logging     = "commons-logging"            % "commons-logging"      % V.logging
-    val log4j       = "log4j"                      % "log4j"                % V.log4j
-
+    val logging     = "commons-logging"            %  "commons-logging"      % V.logging
+    val log4j       = "log4j"                      %  "log4j"                % V.log4j
     // Apache HttpClient
-    val http        = "commons-httpclient"         % "commons-httpclient"   % V.http
-    val codec       = "commons-codec"              % "commons-codec"        % V.codec
+    val http        = "commons-httpclient"         %  "commons-httpclient"   % V.http
+    val codec       = "commons-codec"              %  "commons-codec"        % V.codec
   }
 }

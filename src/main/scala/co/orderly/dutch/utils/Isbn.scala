@@ -36,6 +36,9 @@ object Isbn {
   protected def checksum(partial: String): Char = {
 
     val weight = (10 to 1 by -1).toList
+
+    // You're not expected to understand this. It's idiomatic Scala for this Java:
+    // http://weblogs.asp.net/fmarguerie/archive/2007/12/23/isbn-13-to-isbn-10.aspx
     val checksum = 11 - ((partial.toList, weight).zipped.map{ case (c, w) => c.asDigit * w }.reduceLeft(_+_) % 11)
 
     // Finally what we return depends on the checksum value
