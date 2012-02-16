@@ -21,21 +21,23 @@ import utils._
 class IsbnTest extends Specification {
 
   // List of tuples of correct ISBN-13, ISBN-10s
-  val isbns = List(("978-1449398583", "1449398588"),
-                   ("978-1934356593", "193435659X"),
-                   ("978-0596805784", "0596805780"),
-                   ("9780596805524", "0596805527"),
-                   ("9780596802790", "059680279X"),
-                   ("9781593272821", "1593272820"),
-                   ("978 0981531649", "0981531644"),
-                   ("978 0470227800", "047022780X"),
-                   ("978 0321733016", "0321733010"))
+  val correctIsbns = List(("978-1449398583", "1449398588"),
+                          ("978-1934356593", "193435659X"), // X ending
+                          ("978-0596805784", "0596805780"), // 0 ending
+                          ("9780596805524",  "0596805527"), // No dash or space
+                          ("9780596802790",  "059680279X"), // "  "    "  "     X ending
+                          ("9781593272821",  "1593272820"), // "  "    "  "     0 ending
+                          ("978 0981531649", "0981531644"), // Space not dash
+                          ("978 0470227800", "047022780X"), // "  "    "  "     X ending
+                          ("978 0321733016", "0321733010")) // "  "    "  "     0 ending
 
-  isbns.foreach { case (isbn13, isbn10) =>
+  correctIsbns.foreach { case (isbn13, isbn10) =>
     "The ISBN-10 version of %s".format(isbn13) should {
       "equal %s".format(isbn10) in {
         Isbn.isbn13to10(isbn13) must be_==(isbn10)
       }
     }
   }
+
+  // TODO: test handling of invalid ISBNs too
 }
