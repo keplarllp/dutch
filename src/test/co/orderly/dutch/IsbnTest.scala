@@ -42,5 +42,19 @@ class IsbnTest extends Specification {
         "Hello world" must endWith("world")
       }
     }
+/*
+ class BasketSpecification extends Specification {
 
+     "a basket must contain fruits" >> {
+       Seq(apple, banana, orange) foreach { fruit => 
+         ("it contains: " + fruit) >> {
+           basket must contain(fruit)
+         }
+       }
+     }
+   }
+
+
+
+*/
 }
